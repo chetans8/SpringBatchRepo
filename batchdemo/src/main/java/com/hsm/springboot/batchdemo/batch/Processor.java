@@ -18,8 +18,10 @@ public class Processor implements ItemProcessor<Users, Users> {
 	@Override
 	public Users process(Users user) throws Exception {
 		Optional<Users> userFromDb = userRepo.findById(user.getUserId());
+		System.out.println("User id is "+ user.getUserId()+ userFromDb);
 		if(userFromDb.isPresent()) {
 			user.setAccount(user.getAccount().add(userFromDb.get().getAccount()));
+			System.out.println("User avaialble"+user);
 		}
 		return user;
 	}

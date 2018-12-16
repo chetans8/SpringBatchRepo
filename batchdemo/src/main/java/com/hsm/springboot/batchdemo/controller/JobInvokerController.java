@@ -7,6 +7,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
  
@@ -22,6 +23,7 @@ public class JobInvokerController {
     Job accountKeeperJob;
     
     @RequestMapping("/run-batch-job")
+    @Scheduled(fixedRate = 5000)
     public String handle() throws Exception {
  
             JobParameters jobParameters = new JobParametersBuilder()

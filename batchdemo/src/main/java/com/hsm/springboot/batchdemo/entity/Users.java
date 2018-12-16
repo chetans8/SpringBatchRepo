@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -12,10 +14,13 @@ public class Users {
 	@Id
 	private Long userId;
 	
+	@NotNull(message="{name.empty}")
 	private String name;
 	
 	private String dept;
 	
+	@NotNull(message="{account.empty}")
+	//@DecimalMin(value = "0", inclusive = false, message = "{account.invalid}")
 	private BigDecimal account;
 
 	public Long getUserId() {
