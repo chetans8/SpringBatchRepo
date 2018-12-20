@@ -1,0 +1,4 @@
+FROM java:8
+EXPOSE 8095
+ADD /target/springbootdemo.jar springbootdemo.jar
+ENTRYPOINT ["java", "-jar", "springbootdemo.jar"]
