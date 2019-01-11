@@ -37,7 +37,7 @@ public class BatchConfiguration {
     @Bean
     public FlatFileItemReader<Provider> reader() {
         return new FlatFileItemReader<Provider>()
-            .name("providerItemReader")
+            .name(providerItemReader)
             .resource(new ClassPathResource("sample-data.csv"))
             .delimited()
             .names(new String[]{"firstName", "lastName"})

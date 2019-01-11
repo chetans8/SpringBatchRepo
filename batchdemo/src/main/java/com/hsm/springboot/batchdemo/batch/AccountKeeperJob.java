@@ -53,6 +53,8 @@ public class AccountKeeperJob extends JobExecutionListenerSupport {
 		return job;
 	}
 	
+	//This method can be defined in Job Completion Listener as separate class 
+	//or This method will provide the status of the job can be defined here
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		if (jobExecution.getStatus() == BatchStatus.COMPLETED) {

@@ -1,4 +1,4 @@
-package com.hsm.springboot.batch;
+package com.javainuse;
 
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;

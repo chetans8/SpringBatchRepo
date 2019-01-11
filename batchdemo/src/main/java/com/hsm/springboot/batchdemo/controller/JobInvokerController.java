@@ -22,6 +22,8 @@ public class JobInvokerController {
     @Qualifier("accountJob")
     Job accountKeeperJob;
     
+    
+    //JOb can be invoked multiple times by changing parameters of the job
     @RequestMapping("/run-batch-job")
     @Scheduled(fixedRate = 5000)
     public String handle() throws Exception {

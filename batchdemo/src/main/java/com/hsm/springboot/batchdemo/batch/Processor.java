@@ -18,7 +18,10 @@ public class Processor implements ItemProcessor<Users, Users> {
 	@Override
 	public Users process(Users user) throws Exception {
 		Optional<Users> userFromDb = userRepo.findById(user.getUserId());
-		System.out.println("User id is "+ user.getUserId()+ userFromDb);
+		System.out.println("User id is ::"+ user.getUserId()+ " ::name : "+user.getName());
+		System.out.println("Amt value ::"+ user.getAccount());
+		
+		//Optional class information available after job has been invoked.
 		if(userFromDb.isPresent()) {
 			user.setAccount(user.getAccount().add(userFromDb.get().getAccount()));
 			System.out.println("User avaialble"+user);
