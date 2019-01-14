@@ -34,7 +34,14 @@ public class BatchConfiguration {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
     
-    @Bean
+    @Autowired
+    public DataSource dataSource;
+
+    
+   /*
+    * 
+    *  @Bean
+    
     public FlatFileItemReader<Provider> reader() {
         return new FlatFileItemReader<Provider>()
             .name(providerItemReader)
@@ -45,7 +52,29 @@ public class BatchConfiguration {
                 setTargetType(Provider.class);
             }})
             .build();
+    }*/
+    
+    @Bean
+    public FlatFileItemReader<Provider> reader() {
+       FlatFileItemReader<Provider> reader = new FlatFileItemReader<Provider>();
+       reader.setResource(new ClassPathResource("sample-data.csv"));
+       reader.setLineMapper(new DefaultLineMapper<Provider>() {
+          {
+             setLineTokenizer(new DelimitedLineTokenizer() {
+                {
+                   setNames(new String[] { "firstName", "lastName","email" });
+                }
+             });
+             setFieldSetMapper(new BeanWrapperFieldSetMapper<Provider>() {
+                {
+                   setTargetType(Provider.class);
+                }
+             });
+          }
+       });
+       return reader;
     }
+    
     
     @Bean
     public ProviderItemProcessor processor() {
@@ -53,13 +82,26 @@ public class BatchConfiguration {
     }
     
 
-    @Bean
+    /**
+     * @Bean
+     * @param dataSource
+     * @return
+     
     public JdbcBatchItemWriter<Provider> writer(DataSource dataSource) {
         return new JdbcBatchItemWriter<Provider>()
             .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
             .sql("INSERT INTO provider (first_name, last_name) VALUES (:firstName, :lastName)")
             .dataSource(dataSource)
             .build();
+    }*/
+    
+    @Bean
+    public JdbcBatchItemWriter<Provider> writer() {
+       JdbcBatchItemWriter<Provider> writer = new JdbcBatchItemWriter<Provider>();
+       writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Provider>());
+       writer.setSql("INSERT INTO PROVIDER (first_name, last_name, email) VALUES (:firstName, :lastName, :email)");
+       writer.setDataSource(dataSource);
+       return writer;
     }
     // end::readerwriterprocessor[]
     
