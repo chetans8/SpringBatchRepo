@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 

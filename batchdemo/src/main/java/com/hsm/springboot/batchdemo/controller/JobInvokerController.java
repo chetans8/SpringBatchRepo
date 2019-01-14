@@ -23,13 +23,13 @@ public class JobInvokerController {
     Job accountKeeperJob;
     
     
-    //JOb can be invoked multiple times by changing parameters of the job
+    //JOb can be invoked multiple times by changing parameters of the job or by adding the time parameter to the job
     @RequestMapping("/run-batch-job")
     @Scheduled(fixedRate = 5000)
     public String handle() throws Exception {
  
             JobParameters jobParameters = new JobParametersBuilder()
-            								.addString("source", "Spring Boot")
+            								.addString("source", "Spring Boot")   //addLong("time", System.currentTimeMillis())
             								.toJobParameters();
             jobLauncher.run(accountKeeperJob, jobParameters);
             
