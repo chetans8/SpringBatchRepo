@@ -11,12 +11,12 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
 
 import com.hsm.springboot.batchdemo.entity.Users;
 
-@Component
+@Configuration
 public class AccountKeeperJob extends JobExecutionListenerSupport {
 	
 	@Autowired
@@ -30,11 +30,32 @@ public class AccountKeeperJob extends JobExecutionListenerSupport {
 	
 	@Autowired
 	Processor processor;
-	
+
 	@Autowired
 	Writer writer;
 	
-	@Bean(name = "accountJob")
+	@Bean
+	public Job processJob() {
+		return jobBuilderFactory.get("accountJob")
+				.incrementer(new RunIdIncrementer())
+				.listener(this)
+				.flow(orderStep1())
+				.end()
+				.build();
+	}
+
+	@Bean
+	public Step orderStep1() {
+		return stepBuilderFactory.get("orderStep1")
+				.<Users, Users> chunk(1)
+				.reader(new Reader(resource))
+				.processor(processor)
+				.writer(writer)
+				.build();
+	}
+	
+	
+	/**@Bean(name = "accountJob")
 	public Job accountKeeperJob() {
 
 		Step step = stepBuilderFactory.get("step-1")
@@ -51,7 +72,7 @@ public class AccountKeeperJob extends JobExecutionListenerSupport {
 				.build();
 
 		return job;
-	}
+	}**/
 	
 	//This method can be defined in Job Completion Listener as separate class 
 	//or This method will provide the status of the job can be defined here
@@ -61,5 +82,5 @@ public class AccountKeeperJob extends JobExecutionListenerSupport {
 			System.out.println("BATCH JOB COMPLETED SUCCESSFULLY");
 		}
 	}
-
+			
 }
