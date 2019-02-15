@@ -3,6 +3,16 @@
 
 	<property name="DEV_HOME" value="c:/logs" />
 
+	<!-- Console appenders  -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	    <!-- encoders are assigned the type
+	         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+	    <encoder>
+	      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+	    </encoder>
+  	</appender>
+
+	<!-- File appenders  -->
 	<appender name="FILE-AUDIT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${DEV_HOME}/batchdemo_debug.log</file>
@@ -14,7 +24,7 @@
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/archived/debug.%d{yyyy-MM-dd}.%i.log
+			<fileNamePattern>${DEV_HOME}/archived/batchdemo_debug.%d{yyyy-MM-dd}.%i.log
                         </fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -24,13 +34,15 @@
 
 	</appender>
 
-	<logger name="com.mkyong" level="debug"
+	<logger name="com.hsm.springboot.batchdemo" level="debug"
 		additivity="false">
 		<appender-ref ref="FILE-AUDIT" />
+		
 	</logger>
 
 	<root level="error">
 		<appender-ref ref="FILE-AUDIT" />
+		<appender-ref ref="STDOUT" />
 	</root>
 
 </configuration>

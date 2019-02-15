@@ -1,5 +1,7 @@
 package com.hsm.springboot.batchdemo.batch;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -14,10 +16,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
+import com.hsm.springboot.batchdemo.BatchdemoApplication;
 import com.hsm.springboot.batchdemo.entity.Users;
 
 @Configuration
 public class AccountKeeperJob extends JobExecutionListenerSupport {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AccountKeeperJob.class);
 	
 	@Autowired
 	JobBuilderFactory jobBuilderFactory;
@@ -79,7 +84,8 @@ public class AccountKeeperJob extends JobExecutionListenerSupport {
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
-			System.out.println("BATCH JOB COMPLETED SUCCESSFULLY");
+			//System.out.println("BATCH JOB COMPLETED SUCCESSFULLY");
+			logger.debug("BATCH JOB COMPLETED SUCCESSFULLY");
 		}
 	}
 			
