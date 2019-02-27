@@ -4,10 +4,18 @@ server:
 spring:
   application:
     name: BatchEurekaServer 
+  profiles:
+    active:
+    - DEV
  
 eureka:
+  instance:
+    hostname: localhost
   client:
     registerWithEureka: false   #telling the server not to register himself in the service registry
     fetchRegistry: false
+    service-url:
+      defaultZone:
+         http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 0    #wait time for subsequent sync
