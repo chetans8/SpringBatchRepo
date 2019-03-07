@@ -9,6 +9,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,9 @@ public class JobInvokerController {
     @Autowired
     Job job;
    
+   
+	@Value("${user.role}")
+    private String role;
     
     //JOb can be invoked multiple times by changing parameters of the job or by adding the time parameter to the job
     @RequestMapping("/run-batch-job")
@@ -41,6 +45,6 @@ public class JobInvokerController {
             jobLauncher.run(job, jobParameters);
     	
             
-        return "Batch job has been invoked";
+        return "Batch job has been invoked in " + role + " environment";
     }
 }
