@@ -10,7 +10,6 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,7 @@ public class JobInvokerController {
 	@Value("${user.role}")
     private String role;
     
-    //JOb can be invoked multiple times by changing parameters of the job or by adding the time parameter to the job
+    //JOb can be invoked multiple times by changing parameters of the job or by adding the time parameter to the job and adding annotation @EnableScheduling
     @RequestMapping("/run-batch-job")
     @Scheduled(fixedRate = 5000)
     public String handle() throws Exception {

@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import com.hsm.springboot.batchdemo.BatchdemoApplication;
 import com.hsm.springboot.batchdemo.entity.Users;
 
 @Configuration
