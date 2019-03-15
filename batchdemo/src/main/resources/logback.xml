@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
+<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+<springProperty scope="context" name="batchdemo" source="spring.application.name"/>
 	<property name="DEV_HOME" value="c:/logs" />
 
-	<!-- Console appenders  -->
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-	    <!-- encoders are assigned the type
-	         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-	    <encoder>
-	      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-	    </encoder>
-  	</appender>
+	<property name="CONSOLE_LOG_PATTERN"
+		value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}" />
 
-	<!-- File appenders  -->
+	<!-- Console appenders -->
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- File appenders -->
 	<appender name="FILE-AUDIT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/batchdemo_debug.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
-			</Pattern>
+		<file>${DEV_HOME}/batchdemo_dev_debug.log</file>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
 		</encoder>
 
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/archived/batchdemo_debug.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- Roll-over daily -->
+			<fileNamePattern>${DEV_HOME}/archived/batchdemo_dev_debug.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>90</maxHistory>
+			<totalSizeCap>10MB</totalSizeCap>
 		</rollingPolicy>
-
 	</appender>
 
 	<logger name="com.hsm.springboot.batchdemo" level="debug"
 		additivity="false">
 		<appender-ref ref="FILE-AUDIT" />
-				<appender-ref ref="STDOUT" />
 		
+	</logger>
+
+	<logger name="org.springframework.web.filter.CommonsRequestLoggingFilter">
+ 		<appender-ref ref="FILE-AUDIT"/>
+ 		
 	</logger>
 
 	<root level="error">
