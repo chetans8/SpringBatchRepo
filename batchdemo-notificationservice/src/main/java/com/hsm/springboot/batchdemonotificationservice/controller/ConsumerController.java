@@ -15,7 +15,7 @@ public class ConsumerController {
 	@GetMapping("/hello")
 	public String getHelloworld() {
 		
-		Notification notification = new Notification("Notification is invoked and created", "admin@springdemo.com", "647XXXXX22");
+		Notification notification = new Notification("Notification is invoked and created", "aa6n1e6l9o5b5l2x0@telushealth.slack.com", "647XXXXX22");
 		notificationService.sendNotification(notification);
 		
 		
