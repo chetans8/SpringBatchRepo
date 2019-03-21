@@ -1,0 +1,15 @@
+server:
+  port: 8899
+
+spring:
+  application:
+          name: appconfigrepo
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false
+          
+encrypt:
+  key: telushsm
+  
