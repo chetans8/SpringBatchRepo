@@ -1,0 +1,22 @@
+server:
+  port: 8888
+
+spring:
+  application:
+          name: appconfigrepo
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/chetans8/SpringBatchRepo.git
+          username: chetans8
+          password: 
+          skip-ssl-validation: true
+          search-paths:
+          - app-config-repo
+  profiles:
+    active:
+    - dev,prod
+    
+          
